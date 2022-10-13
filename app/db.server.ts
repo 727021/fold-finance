@@ -1,16 +1,16 @@
 import { json } from '@remix-run/node'
-import mongoose from 'mongoose'
+import { STATES, connection, connect as dbConnect } from 'mongoose'
 
 const maxTries = process.env.MONGO_TRIES ?? 5
 let tries = 0
 
 export const connect = async (): Promise<void> => {
   // If we're already connected, do nothing
-  if (mongoose.connection.readyState === 1) return
+  if (connection.readyState === STATES.connected) return
   // Try to connect up to `maxTries` times
   try {
     console.info(`Connecting to database. This is attempt number ${tries + 1}...`)
-    await mongoose.connect(process.env.MONGO_URL!)
+    await dbConnect(process.env.MONGO_URL!)
     console.info('Connected to database.')
   } catch (error) {
     if (tries < maxTries) {

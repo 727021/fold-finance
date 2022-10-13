@@ -57,7 +57,7 @@ schema.plugin(uniqueValidator)
 
 export type IUser = InferSchemaType<typeof schema>
 
-// This `??` makes sure HMR doesn't cause models to be defined twice
+// This `??` makes sure models are never defined twice
 export const User = models['User'] ?? model('User', schema)
 
 export default User
