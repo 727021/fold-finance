@@ -1,4 +1,4 @@
-import type { InferSchemaType, ValidatorProps } from 'mongoose'
+import type { InferSchemaType, Model, ValidatorProps } from 'mongoose'
 import { Schema, model, models } from 'mongoose'
 import isEmail from 'validator/lib/isEmail'
 import normalizeEmail from 'validator/lib/normalizeEmail'
@@ -6,9 +6,19 @@ import uniqueValidator from 'mongoose-unique-validator'
 
 const schema = new Schema(
   {
-    name: {
+    googleId: {
       type: String,
       required: true,
+      unique: true
+    },
+    givenName: {
+      type: String,
+      required: true,
+      trim: true
+    },
+    familyName: {
+      type: String,
+      required: false,
       trim: true
     },
     email: {
@@ -22,29 +32,6 @@ const schema = new Schema(
       set: (v: string) => normalizeEmail(v),
       unique: true,
       uniqueCaseInsensitive: true
-    },
-    password: {
-      type: String,
-      required: true
-    },
-    lastLogin: {
-      type: Date,
-      required: false
-    },
-    // JWT used for email verification
-    verificationToken: {
-      type: String,
-      required: true
-    },
-    verified: {
-      type: Boolean,
-      required: false,
-      default: false
-    },
-    // JWT used for password resets
-    resetToken: {
-      type: String,
-      required: false
     }
   },
   {
@@ -58,6 +45,6 @@ schema.plugin(uniqueValidator)
 export type IUser = InferSchemaType<typeof schema>
 
 // This `??` makes sure models are never defined twice
-export const User = models['User'] ?? model('User', schema)
+export const User: Model<IUser, {}, {}, {}, typeof schema> = models['User'] ?? model('User', schema)
 
 export default User

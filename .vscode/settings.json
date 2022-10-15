@@ -1,5 +1,8 @@
 {
     "javascript.preferences.quoteStyle": "single",
     "typescript.preferences.quoteStyle": "single",
-    "editor.tabSize": 2
+    "editor.tabSize": 2,
+    "javascript.format.semicolons": "remove",
+    "typescript.format.semicolons": "remove",
+    "prettier.jsxSingleQuote": false
 }
