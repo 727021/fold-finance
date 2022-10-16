@@ -3,7 +3,7 @@ import { Authenticator } from 'remix-auth'
 import type { IUser} from '~/models/User'
 import { User } from '~/models/User'
 import { sessionStorage } from '~/services/session.server'
-import { connect } from './db.server'
+import { connect } from '~/services/db.server'
 
 
 export const authenticator = new Authenticator<IUser>(sessionStorage)
