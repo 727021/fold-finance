@@ -1,10 +1,10 @@
 import type { LoaderFunction } from '@remix-run/node'
 import { json } from '@remix-run/node'
 import { useLoaderData } from '@remix-run/react'
-import type { IUser } from '~/models/User'
 import { authenticator } from '~/services/auth.server'
+import type { User } from '@prisma/client'
 
-type LoaderData = { user: Partial<IUser> }
+type LoaderData = { user: Partial<User> }
 
 export const loader: LoaderFunction = async ({ request }) => {
   const user = await authenticator.isAuthenticated(request, {

@@ -1,12 +1,10 @@
 import { GoogleStrategy } from 'remix-auth-google'
 import { Authenticator } from 'remix-auth'
-import type { IUser} from '~/models/User'
-import { User } from '~/models/User'
 import { sessionStorage } from '~/services/session.server'
-import { connect } from '~/services/db.server'
+import { db } from '~/services/db.server'
+import type { User } from '@prisma/client'
 
-
-export const authenticator = new Authenticator<IUser>(sessionStorage)
+export const authenticator = new Authenticator<User>(sessionStorage)
 
 const googleStrategy = new GoogleStrategy(
   {
@@ -23,15 +21,16 @@ const googleStrategy = new GoogleStrategy(
         familyName
       }
     } = profile
-    await connect()
     const user =
-      await User.findOne({ googleId }) ??
-      await new User({
-        googleId,
-        email,
-        givenName,
-        familyName
-      }).save()
+      await db.user.findFirst({ where: { googleId: { equals: googleId } } }) ??
+      await db.user.create({
+        data: {
+          googleId,
+          email,
+          givenName,
+          familyName
+        }
+      })
     return user
   }
 )
