@@ -4,5 +4,6 @@
     "editor.tabSize": 2,
     "javascript.format.semicolons": "remove",
     "typescript.format.semicolons": "remove",
-    "prettier.jsxSingleQuote": false
+    "prettier.jsxSingleQuote": false,
+    "svg.preview.background": "transparent"
 }
