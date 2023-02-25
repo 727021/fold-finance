@@ -1,8 +1,8 @@
-import type { CSSProperties, FC } from 'react'
+import type { CSSProperties } from 'react'
 import { useMemo } from 'react'
 import { useState } from 'react'
 
-const SocialLoginButton: FC<{}> = () => {
+const SocialLoginButton = () => {
   const [focused, setFocused] = useState(false)
   const [hovered, setHovered] = useState(false)
 
