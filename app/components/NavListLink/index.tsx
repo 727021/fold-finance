@@ -1,3 +1,4 @@
+import type { MouseEventHandler } from 'react'
 import { useEffect, useState } from 'react'
 import ListItemButton from '@mui/material/ListItemButton'
 import ListItemIcon from '@mui/material/ListItemIcon'
@@ -29,9 +30,14 @@ const NavListLink = ({
   }, [disableTooltip, open])
 
   // The LinkComponent prop isn't working, so use onClick for now
+  const handleClick: MouseEventHandler = (e) => {
+    e.preventDefault()
+    navigate(href)
+  }
+
   return (
     <Tooltip arrow placement="right" title={label} open={open} onClose={() => setOpen(false)} onOpen={() => !disableTooltip && setOpen(true)}>
-      <ListItemButton onClick={() => navigate(href)} selected={pathname === href}>
+      <ListItemButton href={href} onClick={handleClick} selected={pathname === href}>
         <ListItemIcon>
           {icon}
         </ListItemIcon>
