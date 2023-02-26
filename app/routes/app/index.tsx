@@ -3,6 +3,8 @@ import { json } from '@remix-run/node'
 import { useLoaderData } from '@remix-run/react'
 import { authenticator } from '~/services/auth.server'
 import type { User } from '@prisma/client'
+import Typography from '@mui/material/Typography'
+import Divider from '@mui/material/Divider'
 
 type LoaderData = { user: Partial<User> }
 
@@ -17,12 +19,18 @@ export const loader: LoaderFunction = async ({ request }) => {
 const Dashboard = () => {
   const loaderData = useLoaderData<LoaderData>()
   return (
-    <div>
-      <h1>Dashboard</h1>
+    <>
+      <Typography
+        variant="h4"
+        component="h2"
+      >
+        Dashboard
+      </Typography>
+      <Divider />
       <pre>
         {JSON.stringify(loaderData, null, 2)}
       </pre>
-    </div>
+    </>
   )
 }
 

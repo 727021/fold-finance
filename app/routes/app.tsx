@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import type { LoaderFunction } from '@remix-run/node'
 import { json } from '@remix-run/node'
 import { Outlet, useLoaderData } from '@remix-run/react'
@@ -28,6 +28,7 @@ import SettingsIcon from '@mui/icons-material/Settings'
 import NavListLink from '~/components/NavListLink'
 import ColorModeToggle from '~/components/ColorModeToggle'
 import { useTheme } from '@mui/material/styles'
+import useMediaQuery from '@mui/material/useMediaQuery'
 
 const drawerWidth = 240
 
@@ -71,6 +72,8 @@ const App = () => {
 
   const [open, setOpen] = useState(true)
 
+  const desktop = useMediaQuery('(min-width: 690px)')
+
   return (
     <Box sx={{ display: 'flex', height: '100%' }}>
       <MuiAppBar position="absolute" sx={{ zIndex: theme.zIndex.drawer + 1 }}>
@@ -80,7 +83,7 @@ const App = () => {
             color="inherit"
             aria-label={`${open ? 'close' : 'open'} drawer`}
             onClick={() => setOpen(prev => !prev)}
-            sx={{ marginRight: '24px' }}
+            sx={{ marginRight: '24px', ...(!desktop && { display: 'none' }) }}
           >
             {open ? <ChevronLeftIcon /> : <MenuIcon />}
           </IconButton>
@@ -98,7 +101,7 @@ const App = () => {
       </MuiAppBar>
       <Drawer
         variant="permanent"
-        open={open}
+        open={desktop && open}
       >
         <Toolbar />
         <List component="nav">
@@ -106,50 +109,50 @@ const App = () => {
             href="/app"
             label="Dashboard"
             icon={<DashboardIcon />}
-            disableTooltip={open}
+            disableTooltip={desktop && open}
           />
           <NavListLink
             href="/app/expenses"
             label="Expenses"
             icon={<ShoppingCartIcon />}
-            disableTooltip={open}
+            disableTooltip={desktop && open}
           />
           <NavListLink
             href="/app/savings"
             label="Savings"
             icon={<SavingsIcon />}
-            disableTooltip={open}
+            disableTooltip={desktop && open}
           />
           <NavListLink
             href="/app/budgets"
             label="Budgets"
             icon={<CalendarMonthIcon />}
-            disableTooltip={open}
+            disableTooltip={desktop && open}
           />
           <NavListLink
             href="/app/accounts"
             label="Accounts"
             icon={<AccountBalanceIcon />}
-            disableTooltip={open}
+            disableTooltip={desktop && open}
           />
           <NavListLink
             href="/app/reports"
             label="Reports"
             icon={<BarChartIcon />}
-            disableTooltip={open}
+            disableTooltip={desktop && open}
           />
           <Divider sx={{ my: 1 }} />
           <NavListLink
             href="/app/profile"
             label="Profile"
             icon={<PersonIcon />}
-            disableTooltip={open}
+            disableTooltip={desktop && open}
           />
           <NavListLink
             href="/app/settings"
             label="Settings"
             icon={<SettingsIcon />}
-            disableTooltip={open}
+            disableTooltip={desktop && open}
           />
         </List>
       </Drawer>
