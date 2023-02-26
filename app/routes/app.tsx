@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import type { LoaderFunction } from '@remix-run/node'
+import type { LoaderFunction, TypedResponse } from '@remix-run/node'
 import { json } from '@remix-run/node'
 import { Outlet, useLoaderData } from '@remix-run/react'
 import type { User } from '@prisma/client'
@@ -55,9 +55,9 @@ const Drawer = styled(MuiDrawer, {
   }
 }))
 
-type LoaderData = User
+export type LoaderData = User
 
-export const loader: LoaderFunction = async ({ request }) => {
+export const loader: LoaderFunction = async ({ request }): Promise<TypedResponse<LoaderData>> => {
   const user = await authenticator.isAuthenticated(request, {
     failureRedirect: '/login'
   })
