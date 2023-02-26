@@ -4,8 +4,8 @@ import { renderToString } from 'react-dom/server'
 import { createEmotionCache } from '~/createEmotionCache'
 import createEmotionServer from '@emotion/server/create-instance'
 import { CacheProvider } from '@emotion/react'
-import { CssBaseline, ThemeProvider } from '@mui/material'
-import { theme } from '~/theme'
+import { CssBaseline } from '@mui/material'
+import { ColorModeProvider } from './context/ColorModeContext'
 
 export default function handleRequest(
   request: Request,
@@ -18,10 +18,10 @@ export default function handleRequest(
 
   const MuiRemixServer = () => (
     <CacheProvider value={cache}>
-      <ThemeProvider theme={theme}>
+      <ColorModeProvider>
         <CssBaseline />
         <RemixServer context={remixContext} url={request.url} />
-      </ThemeProvider>
+      </ColorModeProvider>
     </CacheProvider>
   )
 
