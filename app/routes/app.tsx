@@ -162,13 +162,15 @@ const App = () => {
             : theme.palette.grey[900],
           flexGrow: 1,
           minHeight: '100vh',
-          overflow: 'auto'
+          overflow: 'auto',
+          display: 'flex',
+          flexDirection: 'column'
         }}
       >
         <Toolbar />
-        <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+        <Container maxWidth="lg" sx={{ mt: 4, mb: 4, flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
           <Outlet context={loaderData} />
-          <Typography variant="body2" color="text.secondary" align="center" sx={{ pt: 4, cursor: 'default', userSelect: 'none' }}>
+          <Typography variant="body2" color="text.secondary" align="center" sx={{ pt: 4, cursor: 'default', userSelect: 'none', mt: 'auto' }}>
             Copyright &copy; <Link href="/" color="inherit">Fold Finance</Link> {new Date().getFullYear()}
           </Typography>
         </Container>
