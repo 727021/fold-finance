@@ -1,4 +1,4 @@
-import type { PropsWithChildren} from 'react';
+import type { PropsWithChildren} from 'react'
 import { useContext} from 'react'
 import { createContext, useMemo, useState } from 'react'
 import { createEmotionCache } from '~/createEmotionCache'
