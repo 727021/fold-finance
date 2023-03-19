@@ -8,13 +8,35 @@ datasource db {
 }
 
 model User {
-  id         String   @id @default(auto()) @map("_id") @db.ObjectId
-  createdAt  DateTime @db.Date @default(now())
-  email      String   @unique(map: "email_1")
+  id         String    @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt  DateTime  @default(now()) @db.Date
+  email      String    @unique(map: "email_1")
   familyName String
   givenName  String
-  googleId   String   @unique(map: "googleId_1")
-  updatedAt  DateTime @db.Date @updatedAt
+  googleId   String    @unique(map: "googleId_1")
+  updatedAt  DateTime  @updatedAt @db.Date
+  accounts   Account[]
 
   @@map("users")
+}
+
+model Account {
+  id        String      @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt DateTime    @default(now()) @db.Date
+  updatedAt DateTime    @updatedAt @db.Date
+  owner     User        @relation(fields: [ownerId], references: [id])
+  ownerId   String      @db.ObjectId
+  balance   Float       @default(0)
+  type      AccountType
+  name      String
+
+  @@map("accounts")
+}
+
+enum AccountType {
+  CHECKING
+  SAVINGS
+  CREDIT
+  LOAN
+  OTHER
 }

@@ -3,6 +3,7 @@ import { Authenticator } from 'remix-auth'
 import { sessionStorage } from '~/services/session.server'
 import { db } from '~/services/db.server'
 import type { User } from '@prisma/client'
+import type { Session } from '@remix-run/node'
 
 export const authenticator = new Authenticator<User>(sessionStorage)
 
@@ -36,3 +37,7 @@ const googleStrategy = new GoogleStrategy(
 )
 
 authenticator.use(googleStrategy)
+
+export const getCurrentUser = (request: Request | Session) => authenticator.isAuthenticated(request, {
+  failureRedirect: '/login'
+})

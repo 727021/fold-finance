@@ -1,3 +1,4 @@
+import type { CookieParseOptions} from '@remix-run/node'
 import { createCookieSessionStorage } from '@remix-run/node'
 
 export const sessionStorage = createCookieSessionStorage({
@@ -11,4 +12,7 @@ export const sessionStorage = createCookieSessionStorage({
   }
 })
 
-export const { getSession, commitSession, destroySession } = sessionStorage
+export const getSession = async (request?: Request | null | undefined, options?: CookieParseOptions | undefined) =>
+  sessionStorage.getSession(request?.headers.get('cookie'), options)
+
+export const { commitSession, destroySession } = sessionStorage

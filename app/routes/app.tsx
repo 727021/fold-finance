@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import type { LoaderFunction, TypedResponse } from '@remix-run/node'
 import { json } from '@remix-run/node'
 import { Outlet, useLoaderData } from '@remix-run/react'
 import type { User } from '@prisma/client'
-import { authenticator } from '~/services/auth.server'
+import { getCurrentUser } from '~/services/auth.server'
 import Box from '@mui/material/Box'
 import MuiAppBar from '@mui/material/AppBar'
 import Toolbar from '@mui/material/Toolbar'
@@ -58,9 +58,7 @@ const Drawer = styled(MuiDrawer, {
 export type LoaderData = User
 
 export const loader: LoaderFunction = async ({ request }): Promise<TypedResponse<LoaderData>> => {
-  const user = await authenticator.isAuthenticated(request, {
-    failureRedirect: '/login'
-  })
+  const user = await getCurrentUser(request)
 
   return json({ user })
 }

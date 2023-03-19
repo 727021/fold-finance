@@ -1,7 +1,7 @@
 import type { LoaderFunction } from '@remix-run/node'
 import { json } from '@remix-run/node'
 import { useLoaderData } from '@remix-run/react'
-import { authenticator } from '~/services/auth.server'
+import { getCurrentUser } from '~/services/auth.server'
 import type { User } from '@prisma/client'
 import Typography from '@mui/material/Typography'
 import Divider from '@mui/material/Divider'
@@ -9,9 +9,7 @@ import Divider from '@mui/material/Divider'
 type LoaderData = { user: Partial<User> }
 
 export const loader: LoaderFunction = async ({ request }) => {
-  const user = await authenticator.isAuthenticated(request, {
-    failureRedirect: '/login'
-  })
+  const user = await getCurrentUser(request)
 
   return json({ user })
 }

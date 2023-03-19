@@ -16,7 +16,7 @@ export const loader: LoaderFunction = async ({ request }) => {
   await authenticator.isAuthenticated(request, {
     successRedirect: '/app'
   })
-  const session = await getSession(request.headers.get('cookie'))
+  const session = await getSession(request)
   const error = session.get(authenticator.sessionErrorKey)
   return json({ error })
 }
